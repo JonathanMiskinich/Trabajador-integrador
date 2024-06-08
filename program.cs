@@ -186,6 +186,36 @@ namespace Trabajo_Integrador
 		}
 		
 	}
+	public class Deporte
+	{
+	    //atributos
+	    protected string nombre;
+	    protected int id;
+	    protected ArrayList idCategorias;
+	    
+	    //constructor
+	    public Deporte(){
+	        idCategorias= new ArrayList();
+	    }
+	    public Deporte (string nombre, int id){
+	        this.nombre = nombre;
+	        this.id = id;
+	        this.idCategorias = new ArrayList();
+	    }
+	    //propiedades
+	    public string NOMBRE{
+	        get{ return this.nombre;}
+	        set{ this.nombre = value;}
+	    }
+	    public int ID{
+	        get{ return this.id;}
+	        set{ this.id = value;}
+	    }
+	    public ArrayList IDCATEGORIAS{
+	        get{ return this.idCategorias;}
+	        set{ this.idCategorias = value;}
+		}
+	}
 	
 	public class Club
 	{
@@ -215,23 +245,51 @@ namespace Trabajo_Integrador
 			get{return this.categorias;}
 		}
 		
-		//Metodos
-		public void AgregarDeporte(string nombreDeporte)
+		//Metodos Del ArrayList Deportes
+		public void AgregarDeporte(Deporte deporte)
 		{
-			
+			deportes.Add(deporte);
 		}
-		public void EliminarDeporte(string nombreDeporte){}
-		public void ModificarDeporte(string nombreDeporte){}
-		public void VerDatosDeporte(string nombreDeporte){}
+		public void EliminarDeporte(Deporte deporte)
+		{
+			deportes.Remove(deporte);
+		}
+		public int CantDeportes()
+		{
+			return deportes.Count;
+		}
+		public Deporte ObtenerDeporteNum(int num)
+		{
+			return (Deporte)deportes[num];
+		}
 		
-		public void AgregarNinio(int dniNinio){}
-		public void EliminarNinio(int dniNinio){}
-		public void ModificarNinio(int dniNinio){}
-		public void VerDatosNinio(int dniNinio){}
+		// Metodos del ArrayList Ninios
+		public void AgregarNinio(Ninio ninie){
+			ninios.Add(ninie);
+		}
+		public void EliminarNinio(Ninio ninie){
+			ninios.Remove(ninie);
+		}
+		public int CantNinios(){
+			return ninios.Count;
+		}
+		public Ninio ObtenerNinioNum(int num){
+			return (Ninio)ninios[num];
+		}
 		
-		public void AgregarCategoria(string nombreDeporte){}
-		public void EliminarCategoria(string nombreDeporte){}
-		public void ModificarCategoria(string nombreDeporte){}
-		public void VerDatosCategoria(string nombreDeporte){}
+		//Metodos del ArrayList Categorias
+		public void AgregarCategoria(Categoria cat){
+			categorias.Add(cat);
+		}
+		public void EliminarCategoria(Categoria cat){
+			categorias.Remove(cat);
+		}
+		public int CantCategorias(){
+			return categorias.Count;
+		}
+		public Categoria ObtenerCategoriaNum(int num){
+			return (Categoria)categorias[num];
+		}
+		
 	}
 }
