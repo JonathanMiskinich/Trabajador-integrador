@@ -17,6 +17,53 @@ namespace Trabajo_Integrador
 			Console.WriteLine(niño.SOCIO);
 			Console.ReadKey(true);
 		}
+		public static void AltaEntrenador(Club clubUsuario)
+		{
+			string nombre, apellido, nombreDeporte;
+			int dni;
+			bool flag = false;
+			
+			Console.Write("Ingrese el nombre del Entrenador: ");
+			nombre = Console.ReadLine();
+			
+			Console.Write("Ingrese el apellido del Entrenador: ");
+			apellido = Console.ReadLine();
+			
+			Console.Write("ingrese el DNI del entrenador: ");
+			dni = int.Parse(Console.ReadLine());
+			
+			Persona entrenador = new Persona(nombre, apellido, dni);
+			
+			Console.Write("Ingrese el nombre del deporte al que el entrenador va a pertener: ");
+			nombreDeporte = Console.ReadLine();
+			
+			foreach (Deporte element in clubUsuario.DEPORTES) {
+				if (element.NOMBRE == nombreDeporte) {
+					flag = true;
+					
+					foreach (int id in element.IDCATEGORIAS) {
+						
+						foreach (Categoria cat in clubUsuario.CATEGORIAS) {
+							
+							if (cat.ID == id) {
+								Console.WriteLine("La categoria a dar de alta al entrenador es: {0}? (s/n)", cat.NOMBRE);
+								string opc = Console.ReadLine();
+								
+								if (opc == "s") {
+									cat.ENTRENADOR = entrenador;
+									Console.WriteLine("Entrenador dado de alta exitosamente.");
+									break;
+								}
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (flag == false) {
+				Console.WriteLine("No se encontro el nombre del deporte.");
+			}
+		}
 	}
 	public class Persona
 	{
