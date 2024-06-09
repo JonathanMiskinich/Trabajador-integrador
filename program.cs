@@ -7,14 +7,8 @@ namespace Trabajo_Integrador
 	{
 		public static void Main(string[] args)
 		{
-			Ninio niño = new Ninio();
-			
-			niño.NOMBRE = "Juan";
-			niño.APELLIDO = "Miskinich";
-			
-			niño.EDAD= 23;
-			niño.SOCIO = true;
-			Console.WriteLine(niño.SOCIO);
+			Club clubuser = new Club();
+			AltaEntrenador(clubuser);
 			Console.ReadKey(true);
 		}
 		public static void AltaEntrenador(Club clubUsuario)
