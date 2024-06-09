@@ -8,7 +8,7 @@ namespace Trabajo_Integrador
 		public static void Main(string[] args)
 		{
 			Club clubuser = new Club();
-			AltaEntrenador(clubuser);
+			AltaNinio(clubuser);
 			Console.ReadKey(true);
 		}
 		public static void AltaEntrenador(Club clubUsuario)
@@ -31,7 +31,8 @@ namespace Trabajo_Integrador
 			Console.Write("Ingrese el nombre del deporte al que el entrenador va a pertener: ");
 			nombreDeporte = Console.ReadLine();
 			
-			foreach (Deporte element in clubUsuario.DEPORTES) {
+			foreach (Deporte element in clubUsuario.DEPORTES) 
+			{
 				if (element.NOMBRE == nombreDeporte) {
 					flag = true;
 					
@@ -54,15 +55,15 @@ namespace Trabajo_Integrador
 					}
 				}
 			}
-			if (flag == false) {
+			if (flag == false)
 				Console.WriteLine("No se encontro el nombre del deporte.");
-			}
 		}
+		
 		public static void BajaEntrenador(Club clubUsuario)
 		{
 			
 		}
-
+		
 		public static void AltaNinio(Club clubUsuario)
 		{
 			string nombre, apellido, opcion;
@@ -147,7 +148,7 @@ namespace Trabajo_Integrador
 				}
 			}
 		}
-
+		
 		public static void PagoCuota(Club clubUsuario)
 		{
 			int dni;
@@ -198,11 +199,11 @@ namespace Trabajo_Integrador
 				}
 			}
 		}
-
+		
 		public static void ListadoInscriptos(){}
 		
 		public static void ListadoDeudores(){}
-
+		
 		public static void AgregarDeporte(Club ClubUsuario)
 		{
 			string nombreDeporte;
@@ -268,7 +269,7 @@ namespace Trabajo_Integrador
 				}	
 			}
 		}
-
+		
 		public static void EliminarDeporte(Club clubUsuario)
 		{
 			string nombreDeporte;
@@ -307,7 +308,6 @@ namespace Trabajo_Integrador
 				Console.WriteLine("El deporte tiene inscriptos. Debe de no tener inscriptos si quiere eliminarlo.");
 			
 		}
-		
 	}
 	//Excepciones
 	public class SinCapacidadException : Exception{}
@@ -382,7 +382,7 @@ namespace Trabajo_Integrador
 		//ATRIBUTOS
 		private string nombre, dia, horario;
 		private int cupo, cantidadInscriptos, id;
-		private double costoCuota;
+		private double costoCuota, descuento;
 		private Persona entrenador;
 		private ArrayList dniNiniosInscriptos;
 		private static int idUnico = 0;
@@ -390,12 +390,13 @@ namespace Trabajo_Integrador
 		//CONSTRUCTORES
 		public Categoria(){}
 		
-		public Categoria(string nombre, int cupo, int cantidadInscriptos, double costoCuota, string dia, string horario, Persona entrenador){
+		public Categoria(string nombre, int cupo, int cantidadInscriptos, double costoCuota, double descuento, string dia, string horario, Persona entrenador){
 			this.nombre = nombre;
 			this.cupo = cupo;
 			this.cantidadInscriptos = cantidadInscriptos;
 			this.id = idUnico;
 			this.costoCuota = costoCuota;
+			this.descuento = descuento;
 			this.dia = dia;
 			this.horario = horario;
 			this.entrenador = entrenador;
@@ -462,6 +463,17 @@ namespace Trabajo_Integrador
 			}
 		}
 		
+		public double DESCUENTO
+		{
+			get{return this.descuento;}
+			set{
+				if (value < 0) 
+					Console.WriteLine("El descuento no debe de ser menor a 0.");
+				else 
+					this.descuento = value;
+			}
+		}
+		
 		public Persona ENTRENADOR
 		{
 			get{ return this.entrenador;}
@@ -489,7 +501,7 @@ namespace Trabajo_Integrador
 	    private string nombre;
 	    private int id;
 	    private ArrayList idCategorias;
-		private static int idUnico = 0;
+	    private static int idUnico = 0;
 	    
 	    //constructor
 	    public Deporte(){
@@ -499,7 +511,7 @@ namespace Trabajo_Integrador
 	        this.nombre = nombre;
 	        this.id = idUnico;
 	        this.idCategorias = new ArrayList();
-		idUnico++;
+	        idUnico ++;
 	    }
 	    //propiedades
 	    public string NOMBRE{
@@ -514,9 +526,10 @@ namespace Trabajo_Integrador
 	        get{ return this.idCategorias;}
 	        set{ this.idCategorias = value;}
 		}
-
-		//Metodos
-	     public void AgregarCategoria(int idCategoria){
+	    
+	    // Metodos
+	    
+	    public void AgregarCategoria(int idCategoria){
 	    	idCategorias.Add(idCategoria);
 	    }
 	    
