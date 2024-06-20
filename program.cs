@@ -7,11 +7,95 @@ namespace Trabajo_Integrador
 	{
 		public static void Main(string[] args)
 		{
-			Club clubuser = new Club();
-			AltaNinio(clubuser);
-			Console.ReadKey(true);
+			Club clubUser = new Club();
+			int opcion;
+			
+			Console.WriteLine("Bienvenido al Menú de Opciones: ");
+			
+			Menu();
+			
+			opcion = int.Parse(Console.ReadLine());
+			
+			while (opcion != 0) 
+			{
+				if (opcion < 0) {
+					Console.Write("Por favor elija una de las opciones antes mostradas: ");
+					opcion = int.Parse(Console.ReadLine());
+				}else
+				{
+					if (opcion ==  1) {
+						Console.WriteLine("---------------------------------");
+						AgregarDeport(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 2) {
+						Console.WriteLine("---------------------------------");
+						EliminarDeporte(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 3) {
+						Console.WriteLine("---------------------------------");
+						AltaEntrenador(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 4) {
+						Console.WriteLine("---------------------------------");
+						BajaEntrenador(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 5) {
+						Console.WriteLine("---------------------------------");
+						AltaNinio(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 6) {
+						Console.WriteLine("---------------------------------");
+						EliminarNinio(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 7) {
+						Console.WriteLine("---------------------------------");
+						ListadoInscriptos(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 8) {
+						Console.WriteLine("---------------------------------");
+						ListadoDeudores(clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+					if (opcion == 9) {
+						Console.WriteLine("---------------------------------");
+						PagoCuota(ref clubUser);
+						Console.WriteLine("---------------------------------");
+					}
+
+					foreach (Deporte element in clubUser.DEPORTES) 
+					{
+						Console.WriteLine(element.NOMBRE);
+					}
+					Menu();
+						
+					opcion = int.Parse(Console.ReadLine());
+				}
+			}
 		}
-		public static void AltaEntrenador(Club clubUsuario)
+		public static void Menu(){
+			Console.WriteLine("Elija una de las opciones: ");
+			Console.WriteLine("1 - Agregar deporte Nuevo.");
+			Console.WriteLine("2 - Eliminar deporte existente.");
+			Console.WriteLine("3 - Dar de alta a un entrenador a una categoria.");
+			Console.WriteLine("4 - Elimminar a un entrenador.");
+			Console.WriteLine("5 - Dar de alta a un niño en una categoria.");
+			Console.WriteLine("6 - Eliminar a una niño de una categoria.");
+			Console.WriteLine("7 - Ver listado de inscriptos.");
+			Console.WriteLine("8 - Ver el Listado de los deudores.");
+			Console.WriteLine("9 - Realizar el pago de una cuota de un niño.");
+			Console.WriteLine("0 - SALIR");
+			
+			Console.Write("Elija un numero de las opciones: ");
+		}
+		
+		public static Club AltaEntrenador(ref Club clubUsuario)
 		{
 			string nombre, apellido, nombreDeporte;
 			int dni;
@@ -26,6 +110,7 @@ namespace Trabajo_Integrador
 			Console.Write("ingrese el DNI del entrenador: ");
 			dni = int.Parse(Console.ReadLine());
 			
+		//Creo la instacia de persona para guardar los datos del nuevo entrenador
 			Persona entrenador = new Persona(nombre, apellido, dni);
 			
 			Console.Write("Ingrese el nombre del deporte al que el entrenador va a pertener: ");
@@ -57,14 +142,31 @@ namespace Trabajo_Integrador
 			}
 			if (flag == false)
 				Console.WriteLine("No se encontro el nombre del deporte.");
-		}
-		
-		public static void BajaEntrenador(Club clubUsuario)
-		{
 			
+			return clubUsuario;
 		}
 		
-		public static void AltaNinio(Club clubUsuario)
+		public static void BajaEntrenador(ref Club clubUsuario)
+		{
+			Console.WriteLine("Ingrese el dni del entrenador a dar de baja: ");
+			int dni = int.Parse(Console.ReadLine());
+			bool entrenadorEncontrado = false;
+			
+			foreach (Categoria categoria in clubUsuario.CATEGORIAS)
+			{
+				if(categoria.ENTRENADOR != null && categoria.ENTRENADOR.DNI == dni){
+					categoria.ENTRENADOR = null; //Acá asignamos null al atributo entrenador.
+					entrenadorEncontrado = true;
+					Console.WriteLine("Entrnador con DNI {0} eliminado de la categoría {1}.", dni, categoria.NOMBRE);
+				}
+			}
+			
+			if(!entrenadorEncontrado){
+				Console.WriteLine("No se encontró al entrenador con el dni ingresado");
+			}
+		}
+		
+		public static void AltaNinio(ref Club clubUsuario)
 		{
 			string nombre, apellido, opcion;
 			int dni,edad;
@@ -149,7 +251,62 @@ namespace Trabajo_Integrador
 			}
 		}
 		
-		public static void PagoCuota(Club clubUsuario)
+		public static void EliminarNinio(ref Club clubUsuario)
+		{
+			int dni;
+			bool flag = false;
+			bool flagDeporte = false;
+			string nombreDeporte;
+			Ninio ninio;
+			Deporte deporteNinio = new Deporte();
+			
+			Console.Write("Ingrese el DNI del niño que quiere eliminar, sin puntos ni comas: ");
+			dni = int.Parse(Console.ReadLine());
+			
+			
+			foreach (Ninio element in clubUsuario.NINIOS) {
+				if (element.DNI == dni) {
+					ninio = (Ninio)element;
+					flag = true;
+					break;
+				}
+			}
+			
+			if (flag == false)
+				Console.WriteLine("El DNI ingresado no pertenece a ningun niño del club.");
+			else {
+				Console.Write("Ingrese el nombre del deporte al que el niño pertenece: ");
+				nombreDeporte = Console.ReadLine();
+				
+				foreach (Deporte element in clubUsuario.DEPORTES) {
+					if (element.NOMBRE == nombreDeporte) {
+						deporteNinio = (Deporte)element;
+						flagDeporte = true;
+					}
+				}
+				
+				if (flagDeporte) {
+					foreach (int id in deporteNinio.IDCATEGORIAS) {
+						foreach (Categoria cat in clubUsuario.CATEGORIAS) {
+							if (cat.ID == id)  {
+								foreach (int dniNinioCategoria in cat.DNI_NINIOS_INSCRIPTOS) {
+									if (dni == dniNinioCategoria ) {
+										cat.EliminarNinio(dni);
+										cat.CANTIDADINSCRIPTOS -= 1;
+										Console.WriteLine("El niño fue eliminado con exito.");
+										break;
+									}
+								}
+							}
+						}
+					}
+				}else{
+					Console.WriteLine("El deporte ingresado no se encuentra.");
+				}
+			}
+		}
+		
+		public static void PagoCuota(ref Club clubUsuario)
 		{
 			int dni;
 			double costoCuota;
@@ -200,11 +357,71 @@ namespace Trabajo_Integrador
 			}
 		}
 		
-		public static void ListadoInscriptos(){}
+		public static void ListadoInscriptos(ref Club clubUsuario)
+		{
+			string opc, opcDeporte, opcCategoria;
+            int cantxcat= 0, cantxdeportetotal= 0, total= clubUsuario.NINIOS.Count;
+            //creo las variables y el total ya lo calculo porque lo voy a imprimir de todas formas
+            Console.WriteLine("Ingrese 'total' si quiere ver solo la cantidad total de inscriptos o 'deporte' si quiere de algun deporte en especifico");
+            opc=Console.ReadLine(); //le pido al usuario lo que quiere ver
+            if (opc == "deporte"){
+                Console.WriteLine("eliga el deporte del que desea ver los inscriptos");
+                opcDeporte= Console.ReadLine();
+                foreach (Deporte deporte in clubUsuario.DEPORTES) {
+                    if (opcDeporte == deporte.NOMBRE) { //verifico que el deporte este registrado en el club
+                        Console.WriteLine("Eliga la categoria que desea revisar");
+                        opcCategoria= Console.ReadLine();
+                        foreach(Categoria cat in clubUsuario.CATEGORIAS) {
+                            if (opcCategoria == cat.NOMBRE) { //lo mismo con la categoria verifico si esta registrado en el deporte
+                                cantxcat = cantxcat + cat.CANTIDADINSCRIPTOS; //calculo la cantidad de inscriptos es esa categoria sola
+                            }
+                            else{
+                                Console.WriteLine("La categoria no se encuentra en el deporte elegido");
+                            }
+                        }
+                    foreach (Categoria ele in clubUsuario.CATEGORIAS){
+                            bool valor= deporte.IDCATEGORIAS.Contains(ele.ID);//verifico si la id de la categoria se encuentra en el deporte
+                            if (valor == true){ //si es verdadero, hago el calculo
+                                cantxdeportetotal= cantxdeportetotal + ele.CANTIDADINSCRIPTOS; //calculo la cantidad de inscriptos por cada categoria del deporte para saber el total inscriptos en el deporte
+                            }
+                    }
+                 
+                    }
+                    else{
+                        Console.WriteLine("El deporte que eligio no se encuentra disponible");
+                    }
+                }
+                Console.WriteLine("La cantidad de inscriptos segun el deporte y la categoria elegida son: " + cantxcat);
+                Console.WriteLine("La cantidad de inscriptos en total en el deporte elegido son: " + cantxdeportetotal);
+            }
+        Console.WriteLine("La cantidad de inscriptos en total son: " + total);
+        }
 		
-		public static void ListadoDeudores(){}
+		public static void ListadoDeudores(Club clubUsuario)
+		{
+			DateTime mesActual = DateTime.Now;
+			bool hayDeudores = false;
+
+			Console.WriteLine("Listado de Deudores:");
+    
+			foreach (Ninio ninio in clubUsuario.NINIOS)
+			{
+				// Comparamos solo el mes y el año, sin importar el día
+				if (ninio.ULT_MES_PAGO.Year < mesActual.Year ||
+				    (ninio.ULT_MES_PAGO.Year == mesActual.Year && ninio.ULT_MES_PAGO.Month < mesActual.Month))
+				{
+					Console.WriteLine("Nombre: {0} {1}, DNI: {2}, Último mes pago: {3}",
+					                  ninio.NOMBRE, ninio.APELLIDO, ninio.DNI, ninio.ULT_MES_PAGO.ToString("MM/yyyy"));
+					hayDeudores = true;
+				}
+			}
+			if (!hayDeudores)
+			{
+				Console.WriteLine("No hay deudores.");
+			}
+		}
 		
-		public static void AgregarDeporte(Club ClubUsuario)
+		public static Club AgregarDeport(ref Club ClubUsuario)
 		{
 			string nombreDeporte;
 			bool flag = false;
@@ -266,11 +483,13 @@ namespace Trabajo_Integrador
 					
 					Console.WriteLine("Quieres agregarle categorias (s/n): ");
 					opcion = Console.ReadLine();
-				}	
+				}
+				ClubUsuario.AgregarDeporte(deporteNuevo);
 			}
+			return ClubUsuario;
 		}
 		
-		public static void EliminarDeporte(Club clubUsuario)
+		public static void EliminarDeporte(ref Club clubUsuario)
 		{
 			string nombreDeporte;
 			Deporte deporteEliminar = new Deporte();
