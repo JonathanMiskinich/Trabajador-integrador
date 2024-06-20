@@ -11,7 +11,7 @@ namespace Trabajo_Integrador
 			int opcion;
 			
 			Console.WriteLine("Bienvenido al Menú de Opciones: ");
-			
+			Console.WriteLine("---------------------------------");
 			Menu();
 			
 			opcion = int.Parse(Console.ReadLine());
@@ -91,11 +91,11 @@ namespace Trabajo_Integrador
 			Console.WriteLine("8 - Ver el Listado de los deudores.");
 			Console.WriteLine("9 - Realizar el pago de una cuota de un niño.");
 			Console.WriteLine("0 - SALIR");
-			
+			Console.WriteLine("---------------------------------");
 			Console.Write("Elija un numero de las opciones: ");
 		}
 		
-		public static Club AltaEntrenador(ref Club clubUsuario)
+		public static void AltaEntrenador(ref Club clubUsuario)
 		{
 			string nombre, apellido, nombreDeporte;
 			int dni;
@@ -142,8 +142,6 @@ namespace Trabajo_Integrador
 			}
 			if (flag == false)
 				Console.WriteLine("No se encontro el nombre del deporte.");
-			
-			return clubUsuario;
 		}
 		
 		public static void BajaEntrenador(ref Club clubUsuario)
@@ -151,10 +149,12 @@ namespace Trabajo_Integrador
 			Console.WriteLine("Ingrese el dni del entrenador a dar de baja: ");
 			int dni = int.Parse(Console.ReadLine());
 			bool entrenadorEncontrado = false;
+			Persona entrenador;
 			
 			foreach (Categoria categoria in clubUsuario.CATEGORIAS)
 			{
-				if(categoria.ENTRENADOR != null && categoria.ENTRENADOR.DNI == dni){
+				entrenador = (Persona)categoria.ENTRENADOR;
+				if(entrenador != null && entrenador.DNI == dni){
 					categoria.ENTRENADOR = null; //Acá asignamos null al atributo entrenador.
 					entrenadorEncontrado = true;
 					Console.WriteLine("Entrnador con DNI {0} eliminado de la categoría {1}.", dni, categoria.NOMBRE);
@@ -216,7 +216,7 @@ namespace Trabajo_Integrador
 							foreach (Categoria cat in clubUsuario.CATEGORIAS) {
 								
 								if (cat.ID == id) {
-									Console.WriteLine("¿La categoria inscribir el niño es {0}?", cat.NOMBRE);
+									Console.WriteLine("¿La categoria inscribir el niño es {0}? (s/n)", cat.NOMBRE);
 									opcion = Console.ReadLine();
 									
 									if (opcion == "s") {
@@ -360,7 +360,12 @@ namespace Trabajo_Integrador
 		public static void ListadoInscriptos(ref Club clubUsuario)
 		{
 			string opc, opcDeporte, opcCategoria;
-            int cantxcat= 0, cantxdeportetotal= 0, total= clubUsuario.NINIOS.Count;
+            int cantxcat= 0, cantxdeportetotal= 0;
+            ArrayList ninios = clubUsuario.NINIOS;
+            int total = ninios.Count;
+            bool estaDeporte = false;
+            bool estaCategoria = false;
+            
             //creo las variables y el total ya lo calculo porque lo voy a imprimir de todas formas
             Console.WriteLine("Ingrese 'total' si quiere ver solo la cantidad total de inscriptos o 'deporte' si quiere de algun deporte en especifico");
             opc=Console.ReadLine(); //le pido al usuario lo que quiere ver
@@ -369,14 +374,16 @@ namespace Trabajo_Integrador
                 opcDeporte= Console.ReadLine();
                 foreach (Deporte deporte in clubUsuario.DEPORTES) {
                     if (opcDeporte == deporte.NOMBRE) { //verifico que el deporte este registrado en el club
+                		estaDeporte = true;
+                		
                         Console.WriteLine("Eliga la categoria que desea revisar");
                         opcCategoria= Console.ReadLine();
+                        
                         foreach(Categoria cat in clubUsuario.CATEGORIAS) {
-                            if (opcCategoria == cat.NOMBRE) { //lo mismo con la categoria verifico si esta registrado en el deporte
-                                cantxcat = cantxcat + cat.CANTIDADINSCRIPTOS; //calculo la cantidad de inscriptos es esa categoria sola
-                            }
-                            else{
-                                Console.WriteLine("La categoria no se encuentra en el deporte elegido");
+                            
+                        	if (opcCategoria == cat.NOMBRE) { //lo mismo con la categoria verifico si esta registrado en el deporte
+                                cantxcat += cat.CANTIDADINSCRIPTOS; //calculo la cantidad de inscriptos es esa categoria sola
+                                estaCategoria = true;
                             }
                         }
                     foreach (Categoria ele in clubUsuario.CATEGORIAS){
@@ -387,14 +394,20 @@ namespace Trabajo_Integrador
                     }
                  
                     }
-                    else{
-                        Console.WriteLine("El deporte que eligio no se encuentra disponible");
-                    }
                 }
-                Console.WriteLine("La cantidad de inscriptos segun el deporte y la categoria elegida son: " + cantxcat);
-                Console.WriteLine("La cantidad de inscriptos en total en el deporte elegido son: " + cantxdeportetotal);
+                if (!estaDeporte) {
+                	Console.WriteLine("La cantidad de inscriptos en total en el deporte elegido son: " + cantxdeportetotal);
+                	if (!estaCategoria) {
+                		Console.WriteLine("La cantidad de inscriptos segun el deporte y la categoria elegida son: " + cantxcat);
+                	}else{
+                		Console.WriteLine("La categoria ingresada no se encontro. Lo siento.");
+                	}
+                
+                }else{
+                	Console.WriteLine("El deporte ingresado no se encunetra en le club. Lo siento.");
+                }
             }
-        Console.WriteLine("La cantidad de inscriptos en total son: " + total);
+        if (opc == "total") Console.WriteLine("La cantidad de inscriptos en total son: " + total);
         }
 		
 		public static void ListadoDeudores(Club clubUsuario)
@@ -518,8 +531,10 @@ namespace Trabajo_Integrador
 				}
 			}
 			if (flag == false) {
-				if (deporteEliminar.NOMBRE != null) 
+				if (deporteEliminar.NOMBRE != null){
 					clubUsuario.EliminarDeporte(deporteEliminar);
+					Console.WriteLine("El deporte fue eliminado con exito del club.");
+				}
 				else
 					Console.WriteLine("El deporte no se encuentra en la lista.");
 			}
