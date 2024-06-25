@@ -477,6 +477,13 @@ namespace Trabajo_Integrador
 					
 					Console.Write("Ingrese el descuento de la categoria: ");
 					descuento = double.Parse(Console.ReadLine());
+					while (true) {
+						if (descuento >= 0) break; 
+						else {
+							Console.WriteLine("Por favor ingrese un numero positivo.");
+							descuento = double.Parse(Console.ReadLine());
+						}
+					}
 					
 					Console.WriteLine("Ingrese los datos del entrenador");
 					Console.Write("Ingrese el nombre del entrenador: ");
@@ -660,24 +667,13 @@ namespace Trabajo_Integrador
 		public int CUPO
 		{
 			get{ return this.cupo;}
-			set{
-				if( value < 0)
-					Console.WriteLine("El cupo no puede ser negativo");
-				else
-					this.cupo = value;
-				}
+			set{this.cupo = value;}
 		}
 		
 		public int CANTIDADINSCRIPTOS
 		{
 			get{ return this.cantidadInscriptos;}
-			set
-			{
-				if( value < 0 || value > cupo)
-					Console.WriteLine("La cantidad de inscriptos no puede ser negativa, ni mayor a la cantidad de cupos");
-				else
-					this.cantidadInscriptos = value;
-			}
+			set{this.cantidadInscriptos = value;}
 		}
 		
 		public int ID
@@ -689,23 +685,13 @@ namespace Trabajo_Integrador
 		public double COSTOCUOTA
 		{
 			get{ return this.costoCuota;}
-			set{
-				if( value < 0)
-					Console.WriteLine("El costo de la cuota no puede ser menor a 0");
-				else
-					this.costoCuota = value;
-			}
+			set{this.costoCuota = value;}
 		}
 		
 		public double DESCUENTO
 		{
 			get{return this.descuento;}
-			set{
-				if (value < 0) 
-					Console.WriteLine("El descuento no debe de ser menor a 0.");
-				else 
-					this.descuento = value;
-			}
+			set{this.descuento = value;}
 		}
 		
 		public Persona ENTRENADOR
@@ -726,6 +712,18 @@ namespace Trabajo_Integrador
 		
 		public void EliminarNinio(int dniNinio){
 			dniNiniosInscriptos.Remove(dniNinio);
+		}
+		
+		public bool EstaNinio(Ninio nin){
+			return dniNiniosInscriptos.Contains(nin);
+		}
+		
+		public int VerDNINinioNum(int num){
+			return (int)dniNiniosInscriptos[num];
+		}
+		
+		public int VerCantidadNinios(){
+			return dniNiniosInscriptos.Count;
 		}
 		
 	}
@@ -771,8 +769,16 @@ namespace Trabajo_Integrador
 	    	idCategorias.Remove(idCategoria);
 	    }
 	    
+	    public bool CategoriaExiste(int categoriaId){
+	    	return idCategorias.Contains(categoriaId);
+	    }
+	    
 	    public int CantidadCategorias(){
 	    	return idCategorias.Count;
+	    }
+	    
+	    public int VerIDCategoriaNum(int num){
+	    	return (int)idCategorias[num];
 	    }
 	}
 	
@@ -781,6 +787,8 @@ namespace Trabajo_Integrador
 		private ArrayList deportes;
 		private ArrayList ninios;
 		private ArrayList categorias;
+		private int idClub;
+		private static int idUnico = 0;
 		
 		//Constructores
 		public Club()
@@ -788,6 +796,8 @@ namespace Trabajo_Integrador
 			this.deportes = new ArrayList();
 			this.ninios = new ArrayList();
 			this.categorias = new ArrayList();
+			this.idClub = idUnico;
+			idUnico++;
 		}
 		
 		//Properties
@@ -802,6 +812,11 @@ namespace Trabajo_Integrador
 		public ArrayList CATEGORIAS
 		{
 			get{return this.categorias;}
+		}
+		
+		public int ID_CLUB
+		{
+			get{return this.idClub;}
 		}
 		
 		//Metodos Del ArrayList Deportes
