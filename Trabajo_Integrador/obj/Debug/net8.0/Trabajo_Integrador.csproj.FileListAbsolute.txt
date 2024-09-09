@@ -1,0 +1,5 @@
+D:\Practicas-Facultad\Trabajador-integrador\Trabajo_Integrador\obj\Debug\net8.0\Trabajo_Integrador.GeneratedMSBuildEditorConfig.editorconfig
+D:\Practicas-Facultad\Trabajador-integrador\Trabajo_Integrador\obj\Debug\net8.0\Trabajo_Integrador.AssemblyInfoInputs.cache
+D:\Practicas-Facultad\Trabajador-integrador\Trabajo_Integrador\obj\Debug\net8.0\Trabajo_Integrador.AssemblyInfo.cs
+D:\Practicas-Facultad\Trabajador-integrador\Trabajo_Integrador\obj\Debug\net8.0\Trabajo_Integrador.csproj.CoreCompileInputs.cache
+D:\Practicas-Facultad\Trabajador-integrador\Trabajo_Integrador\obj\Debug\net8.0\Trabajo_Integrador.sourcelink.json

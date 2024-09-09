@@ -1,4 +1,4 @@
-namespace Clases.Persona
+namespace Clases.Personas
 {
     public class Persona
 	{
