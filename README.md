@@ -30,11 +30,12 @@ Entorno: .NET SDK (versión mínima recomendada: 6.0)
 Para ejecutar la aplicación en tu máquina local, sigue estos pasos:
 
 #### Clona el repositorio desde GitHub:
-git clone <URL-del-repositorio>
+git clone *URL-del-repositorio*
 #### Navega al directorio del proyecto:
-cd <nombre-del-directorio>
+cd *nombre-del-directorio*
 #### Compila y ejecuta el proyecto:
 dotnet run
+
 Una vez ejecutada la aplicación, podrás interactuar con el sistema a través de la consola. La interfaz permite registrar nuevos participantes, gestionar categorías y deportes, y controlar los pagos de las cuotas.
 
 ## Ejemplos de uso:
