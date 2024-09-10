@@ -17,10 +17,10 @@ namespace Clases.Categorias
 		//CONSTRUCTORES
 		public Categoria(){}
 		
-		public Categoria(string nombre, int cupo, int cantidadInscriptos, double costoCuota, double descuento, string dia, string horario, Persona entrenador){
+		public Categoria(string nombre, int cupo, double costoCuota, double descuento, string dia, string horario, Persona entrenador){
 			this.nombre = nombre;
 			this.cupo = cupo;
-			this.cantidadInscriptos = cantidadInscriptos;
+			this.cantidadInscriptos = 0;
 			this.id = idUnico;
 			this.costoCuota = costoCuota;
 			this.descuento = descuento;

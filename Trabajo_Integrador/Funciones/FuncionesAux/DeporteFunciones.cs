@@ -27,9 +27,10 @@ namespace Funciones.DeporteFunc
 				Console.WriteLine("Quieres agregarle categorias (s/n): ");
 				string opcion = Console.ReadLine();
 				
-				while (opcion == "s") {
+				while (opcion == "s") 
+				{
 					string nombreCategoria, dia, horario,nombreEntrenador, apellidoEntrenador;
-					int cupo, cantidadInscriptos, dni;
+					int cupo, dni;
 					double costo, descuento;
 					
 					Console.Write("Ingrese nombre de la categoria: ");
@@ -43,8 +44,6 @@ namespace Funciones.DeporteFunc
 					
 					Console.Write("Ingrese el cupo: ");
 					cupo = int.Parse(Console.ReadLine());
-					
-					cantidadInscriptos = 0;
 					
 					Console.Write("Ingrese el costo de la cuota: ");
 					costo = double.Parse(Console.ReadLine());
@@ -70,7 +69,7 @@ namespace Funciones.DeporteFunc
 					dni = int.Parse(Console.ReadLine());
 					
 					Persona EntrenadorCategoria = new Persona(nombreEntrenador, apellidoEntrenador, dni);
-					Categoria categoriaNueva = new Categoria(nombreCategoria,cupo, cantidadInscriptos, costo, descuento, dia, horario, EntrenadorCategoria);
+					Categoria categoriaNueva = new Categoria(nombreCategoria,cupo, costo, descuento, dia, horario, EntrenadorCategoria);
 					
 					ClubUsuario.AgregarCategoria(categoriaNueva);
 					deporteNuevo.AgregarCategoria(categoriaNueva.ID);
