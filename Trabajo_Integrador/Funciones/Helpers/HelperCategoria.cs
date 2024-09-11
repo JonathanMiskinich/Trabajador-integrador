@@ -2,6 +2,8 @@ using Funciones.Helpers.PedirDato;
 using Clases.Categorias;
 using Funciones.Helpers.Personas;
 using Clases.Personas;
+using Clases.Clubes;
+using Clases.Deportes;
 
 namespace Funciones.Helpers.Categorias
 {
@@ -13,8 +15,8 @@ namespace Funciones.Helpers.Categorias
 
             string nombre = PedirDatoString.PedirNombre();
             int cupo = PedirDatoEntero.PedirCupo();
+            
             double costoCuota = PedirDatoDouble.PedirCuota();
-
             while (true)
             {
                 if (costoCuota == -1)
@@ -25,7 +27,6 @@ namespace Funciones.Helpers.Categorias
             }
 
             double descuento = PedirDatoDouble.PedirDescuento();
-
             while (true)
             {
                 if (descuento == -1)
@@ -41,6 +42,21 @@ namespace Funciones.Helpers.Categorias
             Persona entrenador = HelperPersona.CrearEntrenador();
 
             return new Categoria(nombre,cupo, costoCuota, descuento, dia, horario, entrenador);
+        }
+
+        public static bool ExisteCategoria(Club club, Deporte deporte, Categoria categoria)
+        {
+            List<int> listaIdCategorias = deporte.IDCATEGORIAS;
+
+            foreach (Categoria item in club.CATEGORIAS)
+            {
+                if (listaIdCategorias.Contains(item.ID))
+                {
+                    if (item.Equals(categoria))
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }
