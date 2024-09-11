@@ -6,7 +6,8 @@ using Clases.Personas;
 
 namespace Funciones.DeporteFunc
 {
-    public static class DeporteFuncExtensions
+    
+	public static class DeporteFuncExtensions
     {
         public static Club AgregarDeport(ref Club ClubUsuario)
 		{
