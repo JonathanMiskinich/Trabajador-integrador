@@ -7,17 +7,17 @@ namespace Clases.Deportes
 	    //atributos
 	    private string nombre;
 	    private int id;
-	    private ArrayList idCategorias;
+	    private List<int> idCategorias;
 	    private static int idUnico = 0;
 	    
 	    //constructor
 	    public Deporte(){
-	        idCategorias= new ArrayList();
+	        idCategorias= new List<int>();
 	    }
 	    public Deporte (string nombre){
 	        this.nombre = nombre;
 	        this.id = idUnico;
-	        this.idCategorias = new ArrayList();
+	        this.idCategorias = new List<int>();
 	        idUnico ++;
 	    }
 	    //propiedades
@@ -29,7 +29,7 @@ namespace Clases.Deportes
 	        get{ return this.id;}
 	        set{ this.id = value;}
 	    }
-	    public ArrayList IDCATEGORIAS{
+	    public List<int> IDCATEGORIAS{
 	        get{ return this.idCategorias;}
 	        set{ this.idCategorias = value;}
 		}
