@@ -11,7 +11,7 @@ namespace Clases.Categorias
 		private int cupo, cantidadInscriptos, id;
 		private double costoCuota, descuento;
 		private Persona entrenador;
-		private ArrayList dniNiniosInscriptos;
+		private List<int> dniNiniosInscriptos;
 		private static int idUnico = 0;
 		
 		//CONSTRUCTORES
@@ -27,7 +27,7 @@ namespace Clases.Categorias
 			this.dia = dia;
 			this.horario = horario;
 			this.entrenador = entrenador;
-			this.dniNiniosInscriptos = new ArrayList();
+			this.dniNiniosInscriptos = new List<int>();
 			idUnico++;
 		}
 		
@@ -86,7 +86,7 @@ namespace Clases.Categorias
 			set{ this.entrenador = value;}
 		}
 		
-		public ArrayList DNI_NINIOS_INSCRIPTOS
+		public List<int> DNI_NINIOS_INSCRIPTOS
 		{
 			get{ return this.dniNiniosInscriptos;}
 		}
@@ -101,11 +101,11 @@ namespace Clases.Categorias
 		}
 		
 		public bool EstaNinio(Ninio nin){
-			return dniNiniosInscriptos.Contains(nin);
+			return dniNiniosInscriptos.Contains(nin.GetDni);
 		}
 		
 		public int VerDNINinioNum(int num){
-			return (int)dniNiniosInscriptos[num];
+			return dniNiniosInscriptos[num];
 		}
 		
 		public int VerCantidadNinios(){

@@ -9,16 +9,16 @@ namespace Funciones.Helpers.Personas
         {
             Console.WriteLine("Ingrese los datos del entrenador ---");
 
-            string nombre = PedirDatoString.PedirNombre();
-            string apellido = PedirDatoString.PedirApellido();
-            int dni = PedirDatoEntero.PedirDni();
+            string nombre = PedirDatoString.PedirString("nombre", "entrenador");
+            string apellido = PedirDatoString.PedirString("apellido", "entrenador");
+            int dni = PedirDatoEntero.PedirEnteroPosit("DNI");
 
             while (true)
             {
                 if (dni == -1)
                 {
                     Console.WriteLine("El DNI debe de ser positivo.\nIngreselo de nuevo: ");
-                    dni = PedirDatoEntero.PedirDni();
+                    dni = PedirDatoEntero.PedirEnteroPosit("DNI");
                 }else {break;}
             }
 

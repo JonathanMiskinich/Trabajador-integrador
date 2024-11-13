@@ -28,7 +28,7 @@ namespace Clases.Personas
 			set{this.apellido = value;}
 		}
 		
-		public int DNI
+		public int GetDni
         {
 			get{return this.dni;}
 			set{this.dni = value;}

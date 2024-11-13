@@ -66,7 +66,7 @@ namespace Funciones.EntrenadorFunc
 			foreach (Categoria categoria in clubUsuario.CATEGORIAS)
 			{
 				entrenador = (Persona)categoria.ENTRENADOR;
-				if(entrenador != null && entrenador.DNI == dni){
+				if(entrenador != null && entrenador.GetDni == dni){
 					categoria.ENTRENADOR = null; //Acá asignamos null al atributo entrenador.
 					entrenadorEncontrado = true;
 					Console.WriteLine("Entrnador con DNI {0} eliminado de la categoría {1}.", dni, categoria.NOMBRE);

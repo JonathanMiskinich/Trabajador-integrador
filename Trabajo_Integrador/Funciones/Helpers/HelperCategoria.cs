@@ -13,8 +13,8 @@ namespace Funciones.Helpers.Categorias
         {
             Console.WriteLine("Ingrese Datos de la categoria ---");
 
-            string nombre = PedirDatoString.PedirNombre();
-            int cupo = PedirDatoEntero.PedirCupo();
+            string nombre = PedirDatoString.PedirString("nombre", "categoria");
+            int cupo = PedirDatoEntero.PedirEnteroPosit("cupo");
             
             double costoCuota = PedirDatoDouble.PedirCuota();
             while (true)
@@ -36,8 +36,8 @@ namespace Funciones.Helpers.Categorias
                 }else {break;}
             }
 
-            string dia = PedirDatoString.PedirDia();
-            string horario = PedirDatoString.PedirHorario();
+            string dia = PedirDatoString.PedirString("dia", "horario");
+            string horario = PedirDatoString.PedirString("horario", "categoria");
 
             Persona entrenador = HelperPersona.CrearEntrenador();
 

@@ -2,48 +2,29 @@ namespace Funciones.Helpers.PedirDato
 {
     public class PedirDatoString
     {
-        public static string PedirNombre()
+        public static string PedirString(string dato, string categoria)
         {
-            Console.Write("Ingrese el nombre: ");
-            return Console.ReadLine();
-        }
-        public static string PedirApellido()
-        {
-            Console.Write("Ingrese el apellido: ");
-            return Console.ReadLine();
-        }
-        public static string PedirDia()
-        {
-            Console.Write("Ingrese el dia: ");
-            return Console.ReadLine();
-        } 
-        public static string PedirHorario()
-        {
-            Console.Write("Ingrese el horario: ");
+            Console.Write($"Ingrese el {0} de {1}: ", dato,categoria);
             return Console.ReadLine();
         }
     }
     public class PedirDatoEntero
     {
-        public static int PedirEnteroPositivo()
+        public static int PedirEnteroPosit(string dato)
         {
-            int num;
-            if (int.TryParse(Console.ReadLine(), out num))
+            Console.Write($"Ingrese el {0}: ", dato);
+            string num = Console.ReadLine();
+
+            while (true)
             {
-                if (num > 0)
-                    return num;
+                if (int.Parse(num) < 0)
+                {
+                    Console.Write("Numero no valido. \nIngrese nuevamente: ");
+                    num  = Console.ReadLine();
+                }
+                else
+                    return int.Parse(num);
             }
-            return -1;
-        }
-        public static int PedirDni()
-        {
-            Console.Write("Ingrese el DNI: ");
-            return PedirEnteroPositivo();
-        }
-        public static int PedirCupo()
-        {
-            Console.Write("Ingrese el cupo: ");
-            return PedirEnteroPositivo();
         }
     }
     public class PedirDatoDouble

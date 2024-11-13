@@ -12,14 +12,14 @@ namespace Funciones.Services.Deportes
         public static void AgregarDeporte(ref Club clubUser)
         {
             Console.WriteLine("Ingrese los datos del deporte.\n");
-            string nombreDeporte = PedirDatoString.PedirNombre();
+            string nombreDeporte = PedirDatoString.PedirString("nombre", "deporte");
 
             while (true)
             {
                 if (HelperDeporte.ExisteDeporte(clubUser, nombreDeporte))
                 {
                     Console.WriteLine("Ese nombre ya existe.\nIngresa otro: ");
-                    nombreDeporte = PedirDatoString.PedirNombre();
+                    nombreDeporte = PedirDatoString.PedirString("nombre", "deporte");
                 }
                 else {break;}
             }
@@ -47,6 +47,24 @@ namespace Funciones.Services.Deportes
                 Console.WriteLine("Quieres agregarle categorias (s/n): ");
 		        opcion = Console.ReadLine();
             }
+        }
+
+        public static bool EliminarDeporte(ref Club clubUser)
+        {
+            Console.WriteLine("Ingrse los datos del deporte a eliminar----");
+            string nombreDeporte = PedirDatoString.PedirString("nombre", "deporte");
+
+            Deporte deporteEliminar = HelperDeporte.EncontrarDeporte(clubUser, nombreDeporte);
+
+            if (deporteEliminar != null)
+            {
+                if (!HelperDeporte.DeporteTieneInscriptos(clubUser, deporteEliminar))
+                {
+                    clubUser.EliminarDeporte(deporteEliminar);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
